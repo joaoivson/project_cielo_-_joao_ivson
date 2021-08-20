@@ -1,0 +1,80 @@
+<meta charset="UTF-8">
+
+<h2 style="font-weight: bold;">{{titulomodulo}}</h2>
+<hr />
+
+<div class="transacao div" ng-if="!detalhes">
+	<input 
+	ng-show="listatransacoes.length > 0" 
+	class="form-control input" type="text" 
+	ng-model="criterioDeBusca"
+	placeholder="Busca"
+	/>
+
+	<table class="table">
+		<thead>
+			<tr>
+				<th></th>
+				<th><a href="" ng-click="ordenarPor('id')" class="th"><br />Data/Hora</th>
+				<th><a href="" ng-click="ordenarPor('status')" class="th">Status</th>
+				<th><a href="" ng-click="ordenarPor('authorizationCode')" class="th">Cód. de Autorização</th>
+				<th><a href="" ng-click="ordenarPor('cardBrand')" class="th">Bandeira</th>
+				<th><a href="" ng-click="ordenarPor('paymentType')" class="th">Movimentação</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-class="{'selecionado negrito': transacoes.selecionado}"
+				ng-Repeat="transacoes in listatransacoes | filter:criterioDeBusca  | orderBy:criterioDeOrdenacao:direcaoDaOrdenacao">
+				<td><input type="checkbox" ng-model="transacoes.selecionado" /></td>
+				<td>{{transacoes.date}}"</td>
+				<td class="td_left">{{transacoes.status}}</td>
+				<td class="td_left">{{transacoes.authorizationCode}}</td>
+				<td class="td_left">{{transacoes.cardBrand}}</td>
+				<td class="td_left">{{transacoes.paymentType}}</td>
+				<td>
+					<img class="detalhes" 
+					src="app/assets/img/icon.png" 
+					ng-model="transacoes.selecionado" 
+					ng-click="detalhesTransacoes(transacoes)"/>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<hr />
+</div>
+
+<div ng-if="detalhes" class="div_detalhadas">
+	<table class="table">
+		<tr>
+			<td class="td_bold">Data/Hora</td>
+			<td class="td_left">{{dadosTransacao.date}}</td>
+			<td class="td_bold">Cód. de Autorização</td>
+			<td class="td_left">{{dadosTransacao.authorizationCode}}</td>
+		</tr>
+		<tr>
+			<td class="td_bold">Status</td>
+			<td class="td_left">{{dadosTransacao.status}}</td>
+			<td class="td_bold">Código Id</td>
+			<td class="td_left">{{dadosTransacao.id}}</td>
+		</tr>
+		<tr>
+			<td class="td_bold">Bandeira</td>
+			<td class="td_left">{{dadosTransacao.cardBrand}}</td>
+			<td class="td_bold">Canal</td>
+			<td class="td_left">{{dadosTransacao.channel}}</td>
+		</tr>
+		<tr>
+			<td class="td_bold">Cód. terminal</td>
+			<td class="td_left">{{dadosTransacao.terminal}}</td>
+			<td class="td_bold">Cartão final</td>
+			<td class="td_left">{{dadosTransacao.truncatedCardNumber}}</td>
+		</tr>
+	</table>
+
+	<td ng-show="detalhes.selecionado">
+		<button class="btn btn-primary" ng-click="showTransacoes()" style="margin-top: 4rem;">Voltar para
+			Transações
+		</button>
+	</td>
+
+</div>
